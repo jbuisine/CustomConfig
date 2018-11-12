@@ -14,6 +14,13 @@ endtry
 map <S-Pageup> :tabprevious<CR>
 map <S-Pagedown> :tabnext<CR>
 
+" Copy and paste command override
+vnoremap <C-c> "+y
+map <C-v> "+P
+
+" For copying to both the clipboard and primary selection
+vnoremap <C-c> "*y :let @+=@*<CR>
+
 "Plug Vim
 map <C-I> :PlugInstall<CR>
 map <C-L> :PlugUpdate<CR>
@@ -96,3 +103,4 @@ Plug '~/my-prototype-plugin'
 
 " Initialize plugin system
 call plug#end()
+
