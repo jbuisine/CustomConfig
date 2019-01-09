@@ -10,6 +10,8 @@ source ~/.vim_runtime/my_configs.vim
 catch
 endtry
 
+set number
+
 " Based custom commands
 map <S-Pageup> :tabprevious<CR>
 map <S-Pagedown> :tabnext<CR>
@@ -18,14 +20,23 @@ map <S-Pagedown> :tabnext<CR>
 vnoremap <C-c> "+y
 map <C-v> "+P
 
+" new tab shorcut
+map <C-t> :tabnew<cr>
+noremap <C-w> :tabclose<cr>
+
+" Switch window (pane)
+noremap <C-I> <C-W><C-W>
+
 " For copying to both the clipboard and primary selection
 vnoremap <C-c> "*y :let @+=@*<CR>
 
 "Plug Vim
-map <C-I> :PlugInstall<CR>
-map <C-L> :PlugUpdate<CR>
+map <C-L> :PlugInstall<CR>
+map <C-M> :PlugUpdate<CR>
 
+"""""""""""""""""""""""
 " NERDTree config
+"""""""""""""""""""""""
 autocmd vimenter * NERDTreeCWD
 
 autocmd StdinReadPre * let s:std_in=1
@@ -58,8 +69,10 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 map <C-a> :NERDTreeToggle<CR>
-map <C-w> :NERDTreeFocusToggle<CR>
+map <C-x> :NERDTreeFocusToggle<CR>
+"""""""""""""""""""""""""""
 " END NERDTree configuration
+"""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
@@ -104,3 +117,41 @@ Plug '~/my-prototype-plugin'
 " Initialize plugin system
 call plug#end()
 
+
+" Others plugins
+" Indent Python in the Google way.
+
+setlocal indentexpr=GetGooglePythonIndent(v:lnum)
+
+let s:maxoff = 50 " maximum number of lines to look backwards.
+
+function GetGooglePythonIndent(lnum)
+
+  " Indent inside parens.
+  " Align with the open paren unless it is at the end of the line.
+  " E.g.
+  "   open_paren_not_at_EOL(100,
+  "                         (200,
+  "                          300),
+  "                         400)
+  "   open_paren_at_EOL(
+  "       100, 200, 300, 400)
+  call cursor(a:lnum, 1)
+  let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
+        \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
+        \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
+        \ . " =~ '\\(Comment\\|String\\)$'")
+  if par_line > 0
+    call cursor(par_line, 1)
+    if par_col != col("$") - 1
+      return par_col
+    endif
+  endif
+
+  " Delegate the rest to the original function.
+  return GetPythonIndent(a:lnum)
+
+endfunction
+
+let pyindent_nested_paren="&sw*2"
+let pyindent_open_paren="&sw*2""
