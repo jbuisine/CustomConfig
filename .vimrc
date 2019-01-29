@@ -1,3 +1,6 @@
+" Custom configuration of vim 
+" Using : https://github.com/amix/vimrc 
+
 set runtimepath+=~/.vim_runtime
 
 source ~/.vim_runtime/vimrcs/basic.vim
@@ -10,70 +13,9 @@ source ~/.vim_runtime/my_configs.vim
 catch
 endtry
 
-set number
-
-" Based custom commands
-map <S-Pageup> :tabprevious<CR>
-map <S-Pagedown> :tabnext<CR>
-
-" Copy and paste command override
-vnoremap <C-c> "+y
-map <C-v> "+P
-
-" new tab shorcut
-map <C-t> :tabnew<cr>
-noremap <C-w> :tabclose<cr>
-
-" Switch window (pane)
-noremap <C-I> <C-W><C-W>
-
-" For copying to both the clipboard and primary selection
-vnoremap <C-c> "*y :let @+=@*<CR>
-
-"Plug Vim
-map <C-L> :PlugInstall<CR>
-map <C-M> :PlugUpdate<CR>
-
-"""""""""""""""""""""""
-" NERDTree config
-"""""""""""""""""""""""
-autocmd vimenter * NERDTreeCWD
-
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" NERDTress File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
-
-call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
-call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
-call NERDTreeHighlightFile('py', 'yellow', 'none', '#ff00ff', '#151515')
-
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-
-map <C-a> :NERDTreeToggle<CR>
-map <C-x> :NERDTreeFocusToggle<CR>
 """""""""""""""""""""""""""
-" END NERDTree configuration
+" Add of all plugins
 """""""""""""""""""""""""""
-
 call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
 
@@ -104,6 +46,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Tree vim plugin 
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " NERDTree tabs plugin
 Plug 'jistr/vim-nerdtree-tabs'
@@ -112,15 +55,92 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Valloric/YouCompleteMe'
 
 " Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
+" Plug '~/my-prototype-plugin'
+
+Plug 'bagrat/vim-buffet'
+
+" Syntax colors plugins for vim
+Plug 'itchyny/lightline.vim'
+Plug 'nightsense/snow'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Nerd tree extension
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " required : https://github.com/ryanoasis/nerd-fonts.git 
 
 " Initialize plugin system
 call plug#end()
 
+" basic configuration
+set number
+set encoding=UTF-8
+set guifont=DroidSansMono\ Nerd\ Font\ 11
 
+"""""""""""""""""""""""""""
+" configure colors for vim
+""""""""""""""""""""""""""" 
+syntax on
+
+set background=dark
+colorscheme snow
+let g:lightline.colorscheme = 'srcery_drk'
+
+"""""""""""""""""""""""
+" NERDTree config
+"""""""""""""""""""""""
+autocmd vimenter * NERDTreeCWD
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+
+let g:NERDTreeWinSize=45
+map <C-a> :NERDTreeToggle<CR>
+map <C-x> :NERDTreeFocusToggle<CR>
+"""""""""""""""""""""""""""
+" END NERDTree configuration
+"""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""
+" Based custom commands
+"""""""""""""""""""""""""""
+map <S-Pageup> :tabprevious<CR>
+map <S-Pagedown> :tabnext<CR>
+
+" Copy and paste command override
+vnoremap <C-c> "+y
+map <C-v> "+P
+
+" new tab shorcut
+map <C-t> :tabnew <cr> <C-a><cr>
+noremap <C-w> :tabclose<cr>
+
+" Switch window (pane)
+noremap <C-I> <C-W><C-W>
+
+" For copying to both the clipboard and primary selection
+vnoremap <C-c> "*y :let @+=@*<CR>
+
+"Plug Vim
+map <C-L> :PlugInstall<CR>
+map <C-M> :PlugUpdate<CR>
+
+"""""""""""""""""""""""""""
+" End based custom commands
+"""""""""""""""""""""""""""
+
+"""""""""""""""""""""""
 " Others plugins
-" Indent Python in the Google way.
+""""""""""""""""""""""
 
+" Indent Python in the Google way.
 setlocal indentexpr=GetGooglePythonIndent(v:lnum)
 
 let s:maxoff = 50 " maximum number of lines to look backwards.
