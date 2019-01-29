@@ -9,7 +9,7 @@ Need to install Nerd Fonts : https://github.com/ryanoasis/nerd-fonts
 
 ## Overview 
 
-![overview](vim_config.png")
+![overview](vim_config.png)
 
 
 
