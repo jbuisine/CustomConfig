@@ -76,7 +76,7 @@ call plug#end()
 " basic configuration
 set number
 set encoding=UTF-8
-set guifont=DroidSansMono\ Nerd\ Font\ 11
+set guifont=DroidSansMono\ Nerd\ Font\ 12
 
 """""""""""""""""""""""""""
 " configure colors for vim
@@ -86,6 +86,7 @@ syntax on
 set background=dark
 colorscheme snow
 let g:lightline.colorscheme = 'srcery_drk'
+let g:airline_theme='cool'
 
 """""""""""""""""""""""
 " NERDTree config
@@ -97,13 +98,17 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
 
 let g:NERDTreeWinSize=45
+
 map <C-a> :NERDTreeToggle<CR>
 map <C-x> :NERDTreeFocusToggle<CR>
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
 """""""""""""""""""""""""""
 " END NERDTree configuration
 """""""""""""""""""""""""""
@@ -119,7 +124,7 @@ vnoremap <C-c> "+y
 map <C-v> "+P
 
 " new tab shorcut
-map <C-t> :tabnew <cr> <C-a><cr>
+map <C-t> :tabnew<cr>
 noremap <C-w> :tabclose<cr>
 
 " Switch window (pane)
