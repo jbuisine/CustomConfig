@@ -22,6 +22,9 @@ call plug#begin('~/.vim/plugged')
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
+" SuperTab plugin
+Plug 'ervandew/supertab'
+
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
@@ -180,3 +183,7 @@ endfunction
 
 let pyindent_nested_paren="&sw*2"
 let pyindent_open_paren="&sw*2""
+
+" All usefull shorcuts
+"""""""""""""""""""""""""""""""
+" https://gist.github.com/awidegreen/3854277
