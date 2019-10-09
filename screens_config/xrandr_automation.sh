@@ -12,10 +12,11 @@ for i in $results; do
         dp=$i
     fi
 
-    res=$(echo $i | grep +0+0)
+    res=$(echo $i | grep +)
 
     if [ ! -z $res ]; then
-        resolution=${i%+0+0}
+        resolution=${i%+*+*}
+	echo $resolution
 
         # find `width` and `height` attributes of resolution
         width=${resolution%x*}
